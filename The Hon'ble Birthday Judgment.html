@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The Hon'ble Birthday Judgment</title>
+<style>
+:root{--bg:#fdeff3;--g1:#fff1f5;--g2:#ece4fa;--paper:#ffffff;--ink:#2a1630;--soft:#7a5b78;--accent:#c2185b;--gold:#c9a227;--line:#f0cfe0;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#140a1f;--g1:#1b0d2b;--g2:#0e1330;--paper:#22132f;--ink:#fbeaf3;--soft:#c9a6c4;--accent:#ff5c9a;--gold:#f2c14e;--line:#4a2a5c}}
+:root[data-theme="dark"]{--bg:#140a1f;--g1:#1b0d2b;--g2:#0e1330;--paper:#22132f;--ink:#fbeaf3;--soft:#c9a6c4;--accent:#ff5c9a;--gold:#f2c14e;--line:#4a2a5c}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg) linear-gradient(160deg,var(--g1),var(--g2)) fixed;color:var(--ink);font-family:Georgia,'Times New Roman',serif;line-height:1.65}
+.doc{max-width:680px;margin:0 auto;padding:20px 16px 60px}
+.head{text-align:center;padding:50px 10px 30px;border-bottom:3px double var(--gold)}
+.head .em{font-size:3rem}
+.head small{letter-spacing:.2em;text-transform:uppercase;color:var(--soft);font-size:.72rem}
+.head h1{font-size:clamp(1.6rem,6.5vw,2.5rem);margin:.3em 0;color:var(--accent);background:linear-gradient(90deg,var(--accent),var(--gold));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.case{margin-top:14px;font-style:italic;color:var(--soft)}
+.case b{color:var(--ink)}
+.art{background:var(--paper);border:1px solid var(--line);border-left:5px solid var(--gold);border-radius:6px;padding:18px 20px;margin:26px 0;opacity:0;transform:translateY(26px);transition:all .8s ease;box-shadow:0 4px 18px rgba(0,0,0,.07)}
+.art.show{opacity:1;transform:none}
+.art h2{margin:0;font-size:1.05rem;letter-spacing:.06em;text-transform:uppercase;color:var(--accent)}
+.art h3{margin:.1em 0 .5em;font-size:1.25rem}
+.art p{margin:.4em 0;color:var(--soft)}
+.says{border-top:1px dashed var(--line);margin-top:12px;padding-top:10px;color:var(--ink)!important}
+.says em{color:var(--accent);font-style:normal;font-weight:bold}
+.ex{display:inline-block;background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:6px 12px;font:italic .9rem Georgia,serif;margin-top:6px}
+.stamp{display:inline-block;transform:rotate(-6deg);border:2px solid var(--accent);color:var(--accent);padding:2px 10px;font:bold .75rem system-ui;letter-spacing:.15em;border-radius:4px;margin-top:8px}
+.fin{text-align:center;padding:50px 0 20px}
+.fin h2{font-size:clamp(1.7rem,7vw,2.8rem);color:var(--accent);margin:.2em 0}
+.fin p{color:var(--soft);max-width:480px;margin:.6em auto}
+.btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:20px}
+button{background:linear-gradient(135deg,var(--accent),#ff8a5c);color:#fff;box-shadow:0 6px 18px rgba(194,24,91,.3);border:0;border-radius:6px;padding:13px 24px;font:1rem Georgia,serif;cursor:pointer}
+button.alt{background:transparent;color:var(--accent);border:2px solid var(--accent)}
+#order{display:none;margin-top:28px;background:var(--paper);border:2px solid var(--accent);border-radius:8px;padding:22px;text-align:left}
+#order h3{text-align:center;margin:0 0 10px;color:var(--accent);letter-spacing:.1em}
+.disc{margin-top:40px;text-align:center;font-size:.78rem;color:var(--soft);font-style:italic}
+canvas{position:fixed;inset:0;pointer-events:none;z-index:9}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div class="doc">
+
+<div class="head">
+  <div class="em">⚖️</div>
+  <small>In the Hon'ble Court of Friendship &amp; Good Vibes</small>
+  <h1>The Birthday Judgment</h1>
+  <div class="case">Case No. 001/<span id="yr"></span> &nbsp;·&nbsp; <b id="me"></b> <i>v.</i> <b>The Unanswered Message</b><br>Presented before: <b>Hon'ble <span id="n1"></span>, LLB</b></div>
+</div>
+
+<div id="arts"></div>
+
+<div class="fin">
+  <div style="font-size:3rem">🎂</div>
+  <h2>Happy Birthday, <span id="n2"></span>!</h2>
+  <p>The Court has heard the matter. All that remains is Your Ladyship's final order.</p>
+  <div class="btns"><button id="b1">Pass the order 🔨</button></div>
+  <div id="order"></div>
+</div>
+
+<div class="disc">Disclaimer: Not legal advice. Not binding on any court. Binding only on my heart. 🤍</div>
+</div>
+
+<script>
+// ✏️ EDIT THESE
+var HER_NAME = "Dora";
+var MY_NAME = "Tehleel";
+var ARTS = [
+ {n:"Preamble",t:"We, the Parties…",p:"Whereas two strangers existed on the same app, and whereas neither knew the plot twist coming, this Document is hereby placed before the Hon'ble Court."},
+ {n:"Article 1",t:"The Right to Add",p:"On a day of no particular importance, the Petitioner exercised his right and added the Respondent on Snapchat.",s:"This says: <em>an offer was made.</em> Simple. Clean. No drama (yet)."},
+ {n:"Article 2",t:"Acceptance of Offer",p:"The Respondent added the Petitioner back, without protest, objection or delay.",s:"This says: <em>offer + acceptance = valid contract.</em> Any law student knows this. I was very hopeful.",stamp:"ACCEPTED"},
+ {n:"Article 3",t:"The Doctrine of Awkward Silence",p:"For a long period thereafter, no messages were exchanged by either party. Both stayed 'friends' only on paper.",s:"This says: <em>silence is not consent, but it is definitely not a conversation either.</em>"},
+ {n:"Article 4",t:"Exhibit A: The First Message",p:"The Petitioner, in a rare act of courage, submitted the following to the record:",ex:"“May I know where you are from?”",s:"This says: <em>a polite and harmless query</em> by any reasonable person's standard."},
+ {n:"Article 5",t:"Left on Read: A Grievance",p:"The Respondent chose to remain silent. Message was seen. No reply was filed.",s:"This says: <em>Res ipsa loquitur</em>, the thing speaks for itself. The Petitioner was hurt but still did not file for appeal.",stamp:"IGNORED"},
+ {n:"Article 6",t:"The Quote That Changed Everything",p:"Thereafter, the Petitioner posted a quote. It was not strategic. It was not a plan. (It was a little bit a plan.)",s:"This says: <em>sometimes the best argument is made indirectly.</em>"},
+ {n:"Article 7",t:"Promissory Estoppel",p:"The Respondent replied to the quote, thereby initiating communication of her own free will.",s:"This says: <em>having replied once, the Respondent is now estopped from denying that we talk.</em> Checkmate, Your Ladyship. 😌",stamp:"CONVERSATION GRANTED"},
+ {n:"Article 8",t:"Right to Continue the Journey",p:"From that single reply, one chat became many, and many became daily.",s:"This says: <em>best case I never expected to win.</em>"}
+];
+document.getElementById("n1").textContent=HER_NAME;
+document.getElementById("n2").textContent=HER_NAME;
+document.getElementById("me").textContent=MY_NAME;
+document.getElementById("yr").textContent=new Date().getFullYear();
+var box=document.getElementById("arts");
+ARTS.forEach(function(a){
+ var h='<div class="art"><h2>'+a.n+'</h2><h3>'+a.t+'</h3><p>'+a.p+'</p>';
+ if(a.ex)h+='<div class="ex">'+a.ex+'</div>';
+ if(a.s)h+='<p class="says">'+a.s+'</p>';
+ if(a.stamp)h+='<span class="stamp">'+a.stamp+'</span>';
+ box.insertAdjacentHTML("beforeend",h+'</div>');
+});
+var io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting)x.target.classList.add("show")})},{threshold:.15});
+document.querySelectorAll(".art").forEach(function(el){io.observe(el)});
+
+var cv=document.getElementById("c"),cx=cv.getContext("2d"),P=[];
+function rs(){cv.width=innerWidth;cv.height=innerHeight}rs();addEventListener("resize",rs);
+function boom(){for(var i=0;i<150;i++)P.push({x:Math.random()*cv.width,y:-10,vx:Math.random()*4-2,vy:Math.random()*4+2,r:Math.random()*6+3,c:["#c2185b","#f2c14e","#ff5c9a","#b388ff"][i%4]});}
+(function loop(){cx.clearRect(0,0,cv.width,cv.height);P.forEach(function(p){p.x+=p.vx;p.y+=p.vy;cx.fillStyle=p.c;cx.fillRect(p.x,p.y,p.r,p.r*1.6)});P=P.filter(function(p){return p.y<cv.height+20});requestAnimationFrame(loop)})();
+
+document.getElementById("b1").onclick=function(){
+ var o=document.getElementById("order");
+ o.innerHTML='<h3>ORDER OF THE COURT</h3><p><b>1.</b> The birthday of Hon\'ble '+HER_NAME+' is declared a <b>public holiday</b> in this jurisdiction.</p><p><b>2.</b> The Petitioner is directed to wish her a very happy birthday. <i>(Done. ✔)</i></p><p><b>3.</b> The matter of <b>one coffee / chai</b> is listed for hearing on a date of Your Ladyship\'s choosing.</p><p><b>4.</b> No costs. Only smiles.</p><p style="text-align:right"><i>Signed,<br>'+HER_NAME+', J. (Honorary)</i></p><div class="btns"><button id="g">Granted ✅</button><button class="alt" id="g2">Granted, with pleasure 😄</button></div>';
+ o.style.display="block";boom();setTimeout(boom,600);this.style.display="none";
+ function done(){o.querySelector(".btns").innerHTML='<p style="text-align:center;color:var(--accent)"><b>Order recorded. 🔨 Happy Birthday!</b></p>';boom();boom();}
+ document.getElementById("g").onclick=done;document.getElementById("g2").onclick=done;
+ o.scrollIntoView({behavior:"smooth",block:"center"});
+};
+</script>
+</body>
+</html>
